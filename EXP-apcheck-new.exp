@@ -1,0 +1,88 @@
+#!/usr/bin/expect
+
+set CTRL_C     \x03       ;# http://wiki.tcl.tk/3038
+
+
+set ipaddr_F [lindex $argv 0]
+set ipaddr_A [lindex $argv 1]
+set fgwpw [lindex $argv 2]
+set apopw [lindex $argv 3]
+set apapw [lindex $argv 4]
+set timeout [lindex $argv 5]
+#set timeout 8
+
+spawn ssh "admin@$ipaddr_F"
+expect { 
+    "yes/no" {send "yes\r"
+            expect "*?assword" { send $fgwpw\r }
+            }
+    "*?assword" { send $fgwpw\r }
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+}
+
+expect {
+    "$ " {send "ssh localOperator@$ipaddr_A\r"} 
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+    }
+expect {
+    "yes/no" {send "yes\r"
+            expect "*?assword" { send $apopw\r }
+            } 
+    "*?assword" { send $apopw\r }
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+    }
+
+
+expect {
+    "primuser*?$ " {send "su - localAdmin\r" }
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+    }
+expect {
+    "*?assword" {send $apapw\r}
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+    }
+expect {
+    "root*?# " {send "console\r"}
+    timeout {send $CTRL_C; puts "Timed Out!"; exit 1}
+    }
+expect "$ " { send "menu\r" }
+expect ": " { send "7\r" }
+expect ": " { send "1\r" }
+expect ": " { send "3\r" }
+expect ": " { send "q\r" }
+expect ": " { send "q\r" }
+expect ": " { send "10\r" }
+expect ": " { send "1\r" }
+expect ": " { send "1\r" }
+expect ": " { send "q\r" }
+expect ": " { send "q\r" }
+expect ": " { send "11\r" }
+expect ": " { send "2\r" }
+expect ": " { send "q\r" }
+expect ": " { send "17\r" }
+expect ": " { send "1\r" }
+expect ": " { send "q\r" }
+expect ": " { send "12\r" }
+expect ": " { send "1\r" }
+expect ": " { send "q\r" }
+expect ": " { send "q\r" }
+expect "con*?$ " { send "ntpStatus\r" }
+expect "con*?$ " { send "exit\r" }
+set stimeout 10 ;#now set stimeout higher for the syslog since this may take longer than normal on a good day
+expect {
+    "root*?# " {send "ifconfig\r"
+                send "route -e\r"
+                send "echo LOCAL AP TIME IS: `date`\r"
+                send "ls -l /var/log/syslog\r"
+                send "cat /var/log/syslog/messages.3\r"
+                send "cat /var/log/syslog/messages.2\r"
+                send "cat /var/log/syslog/messages.1\r"
+                send "cat /var/log/syslog/messages.0\r"
+                send "cat /var/log/syslog/messages\r"
+                send "exit\r"
+                }
+    stimeout {send $CTRL_C; puts "Syslog Timeout?! That's wierd."; exit 1}
+        }
+expect "primuser*?$ " { send "exit\r" } stimeout {send $CTRL_C; puts "Syslog Timeout?! That's weird."; exit 1}
+expect "admin*?$ " { send "exit\r" }
+exit 0

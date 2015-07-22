@@ -1,0 +1,15 @@
+#!/usr/bin/expect
+
+set timeout 20
+set ipaddr_F [lindex $argv 0]
+set fgwpw [lindex $argv 1]
+spawn ssh "admin@$ipaddr_F"
+expect {
+	"yes/no" {send "yes\r"
+				expect "*?assword" { send $fgwpw\r }
+			}
+	"*?assword" { send $fgwpw\r }
+    }
+ 
+expect "$ " { send "rm .ssh/known_hosts\r"}
+expect "$ " { send "exit\r" }

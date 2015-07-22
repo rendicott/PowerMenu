@@ -1,0 +1,97 @@
+If you have already been using PowerMenu you can upgrade to the new version by performing the following steps:
+
+(This assumes that your PowerMenu directory is located on the WMS at ~\pm )
+
+Remove all of the old files from the directory:
+
+	$ rm ~/pm/*
+
+Navigate to the empty directory:
+
+	$ cd ~/pm
+
+Unpack the latest PowerMenu release into the current directory:
+
+        $ tar xvf /home/customer/russ/powermenu/powermenu-v0.4.7.tar
+        x ./EXP-apcheck-new.exp, 2636 bytes, 6 tape blocks
+        x ./EXP-apcheck.exp, 2432 bytes, 5 tape blocks
+        x ./EXP-apreboot.exp, 718 bytes, 2 tape blocks
+        x ./EXP-getbsg.exp, 373 bytes, 1 tape blocks
+        x ./EXP-kh.exp, 324 bytes, 1 tape blocks
+        x ./INSTRUCTIONS-UPGRADE.txt, 3606 bytes, 8 tape blocks
+        x ./INSTRUCTIONS.txt, 3564 bytes, 7 tape blocks
+        x ./PowerMenu.Job.Aid.docx, 2582839 bytes, 5045 tape blocks
+        x ./README.txt, 192427 bytes, 376 tape blocks
+        x ./RELEASENOTES.txt, 4811 bytes, 10 tape blocks
+        x ./body.txt, 83 bytes, 1 tape blocks
+        x ./pm.py, 61243 bytes, 120 tape blocks
+        x ./pmClasses.py, 19777 bytes, 39 tape blocks
+        x ./pmConfig.py, 18256 bytes, 36 tape blocks
+        x ./pmFunctions.py, 43125 bytes, 85 tape blocks
+        x ./pmLoaders.py, 76862 bytes, 151 tape blocks
+        x ./pmRTest.py, 3054 bytes, 6 tape blocks
+        x ./pmThreads.py, 26288 bytes, 52 tape blocks
+
+
+Your directory contents should look like this:
+
+        $ ls -l
+        total 6010
+        -rw-r--r--   1 russ   grouper     2636 Feb  9 13:48 EXP-apcheck-new.exp
+        -rw-r--r--   1 russ   grouper     2432 Feb  9 13:48 EXP-apcheck.exp
+        -rw-r--r--   1 russ   grouper      718 Feb  9 13:48 EXP-apreboot.exp
+        -rw-r--r--   1 russ   grouper      373 Feb  9 13:48 EXP-getbsg.exp
+        -rw-r--r--   1 russ   grouper      324 Feb  9 13:48 EXP-kh.exp
+        -rw-r--r--   1 russ   grouper     3606 Feb  9 13:48 INSTRUCTIONS-UPGRADE.txt
+        -rw-r--r--   1 russ   grouper     3564 Feb  9 13:48 INSTRUCTIONS.txt
+        -rw-r--r--   1 russ   grouper  2582839 Feb  9 13:50 PowerMenu.Job.Aid.docx
+        -rw-r--r--   1 russ   grouper   192427 Feb  9 13:48 README.txt
+        -rw-r--r--   1 russ   grouper     4811 Feb  9 13:48 RELEASENOTES.txt
+        -rw-r--r--   1 russ   grouper       83 Feb  9 13:00 body.txt
+        -rw-r--r--   1 russ   grouper    61243 Feb  9 13:48 pm.py
+        -rw-r--r--   1 russ   grouper    19777 Feb  9 13:48 pmClasses.py
+        -rw-r--r--   1 russ   grouper    18256 Feb  9 13:48 pmConfig.py
+        -rw-r--r--   1 russ   grouper    43125 Feb  9 13:48 pmFunctions.py
+        -rw-r--r--   1 russ   grouper    76862 Feb  9 13:48 pmLoaders.py
+        -rw-r--r--   1 russ   grouper     3054 Feb  9 13:48 pmRTest.py
+        -rw-r--r--   1 russ   grouper    26288 Feb  9 13:48 pmThreads.py
+
+
+
+Add execute permissions to the .exp scripts inside the directory.
+
+        $ chmod +x *.exp
+
+Now you should see that the .exp files have the execute permissions.
+
+
+        $ ls -l
+        total 6010
+        -rwxr-xr-x   1 russ   grouper     2636 Feb  9 13:48 EXP-apcheck-new.exp
+        -rwxr-xr-x   1 russ   grouper     2432 Feb  9 13:48 EXP-apcheck.exp
+        -rwxr-xr-x   1 russ   grouper      718 Feb  9 13:48 EXP-apreboot.exp
+        -rwxr-xr-x   1 russ   grouper      373 Feb  9 13:48 EXP-getbsg.exp
+        -rwxr-xr-x   1 russ   grouper      324 Feb  9 13:48 EXP-kh.exp
+        -rw-r--r--   1 russ   grouper     3606 Feb  9 13:48 INSTRUCTIONS-UPGRADE.txt
+        -rw-r--r--   1 russ   grouper     3564 Feb  9 13:48 INSTRUCTIONS.txt
+        -rw-r--r--   1 russ   grouper  2582839 Feb  9 13:50 PowerMenu.Job.Aid.docx
+        -rw-r--r--   1 russ   grouper   192427 Feb  9 13:48 README.txt
+        -rw-r--r--   1 russ   grouper     4811 Feb  9 13:48 RELEASENOTES.txt
+        -rw-r--r--   1 russ   grouper       83 Feb  9 13:00 body.txt
+        -rw-r--r--   1 russ   grouper    61243 Feb  9 13:48 pm.py
+        -rw-r--r--   1 russ   grouper    19777 Feb  9 13:48 pmClasses.py
+        -rw-r--r--   1 russ   grouper    18256 Feb  9 13:48 pmConfig.py
+        -rw-r--r--   1 russ   grouper    43125 Feb  9 13:48 pmFunctions.py
+        -rw-r--r--   1 russ   grouper    76862 Feb  9 13:48 pmLoaders.py
+        -rw-r--r--   1 russ   grouper     3054 Feb  9 13:48 pmRTest.py
+        -rw-r--r--   1 russ   grouper    26288 Feb  9 13:48 pmThreads.py
+
+
+
+To quickly get started run the program with:
+
+		$ python pm.py
+
+Read the README.txt to learn how to use the program. 
+
+Send questions to rendicott@gmail.com. 

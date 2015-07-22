@@ -1,0 +1,117 @@
+Known Bugs:
+-when launching script with the '-d' option if you pass a '-l' loglevel instead of '-1' the script bombs
+-Bug in alarm info when BSRName deviates from XXXXXXXNNNNN format (e.g., spaces in name for lab ap's)
+-Fix up regex matching, example: typing "exit" tries to send email
+-with 2+index, alarm timestamps not displaying properly
+-put validation into food csv
+-UNVERIFIED: bad password handling
+-In alarm view (9+XX) IuPS etc alarms show up as adminStatus 'locked' which is wrong.
+-add better TIMEOUT handling to reboot sequence
+-fix date sort order in cell up/down log
+
+REQUESTS:
+-Ignore 'lmcFailure' alarms completely. 
+
+Known Limitations:
+-The usefulness of the script depends upon having fresh data. Fresh data is awkward to obtain for most users.
+--Want to write in a "if db older than 4 hrs force refresh"
+--Future development goals include behind-the-scenes data refreshes.
+-The WICL 'FM ClearAlarm' command does not work. There is already an AR open with ALU (AR1-5424256)
+--If the clearalarm command worked the tool could be much more robust.
+
+<<<<<<< HEAD
+v0.4.6.a
+------
+- fixed bug where AP checks sometimes timout
+=======
+v0.4.7
+------
+-cleaned up a ton of formatting, code is closer to being PEP8 compliant
+-added threading but due to WMS performance issues, limiting to a single thread at a time
+-added AP software version display on metrocell fullformat view
+-added support for new 14.02 passwords, Powermenu now needs five passwords fed into it
+-added AP syslog collection-zip-and-email function for individual and group queries.
+-added custom query builder
+-added '114' option to refresh registrations and alarms in one command
+-added MAC address pull to AP check
+-added cluster alarm 'csCnConnectivityLost' to stuck alarm check
+
+>>>>>>> rolling
+
+v0.4.6
+------
+-Switched from 'unmonfiles' to 'CTS food' files. Auto detects and loads latest from '/home/customer/russ/pm_foodfiles'
+---Food report is sourced from AOTS and it's a CSV of the "Daily Small Cell Breakdown" CTS_rawdata tab. 
+---added "full" format which shows more info for inventory view like USID and FALOC code (toggle with 'f')
+-Added 8 second (configurable) timeout to AP checks
+-removed stored passwords in expect scripts. User is now prompted for all three passwords or can pass in as parameters.
+--Added LCell up/down history log for quick "Return to service" time reference. Shows in AP check "verbose" results.\
+-Added 3+27,3+28, and 3+29 to search inventory by CtsEquipName, USID, and FALocation codes
+
+v0.4.5.a
+------
+-Fixed false negatives bug with bad 'funcname' logging. 
+
+v0.4.5
+------
+-fixed status check "0 of 10", now starts at "1 of 10"
+-added '113' full refresh to help
+-status check results now display cluster/group to make it easier to run follow up checks on group
+-inventory view for an AP now shows an asterisk next to AP if it has any alarms
+--alarms for that AP can be looked up with the 2+index command
+-All WMS data now comes from flat files to limit WICL sessions.
+--by default the files dump to /home/customer/russ/wicldumps
+-GRID/GATEWAY info fixed. Parsing it takes longer though. (see option -g)
+-Added 'Santa Ana 2' as new monitored FGW (SNAPCAHHCR9S02)
+-fixed false negatives known_hosts SSH check
+-fixed 113/112 refresh updated
+-fixed: if launch menu.py without unmonfile and try to 113 refresh, will bomb.
+-Added AP reboot feature (6+commonid). 
+
+v0.4.4
+------
+-fixed colors bug with CLI*Manager
+
+v0.4.3
+-------
+-general improvements and bug fixes
+-added CSV output and CSV-to-Email function
+-added Stuck alarms check for BSR related alarms
+-began conversion from Alarm dictionary to Alarm Objects (LOO = List of Objects)
+-added macro functionality
+
+
+v0.4.1
+-------
+-added bulk CommonID search with 'b' and list from csv string
+
+v0.4
+-------
+-added bulk ap checks based on cluster,group search
+-added rowstatus display for ap check results
+-began elimniating global variables and instead pass relevant variables from function to function and use returns
+-added error handling for the bug when ssh keys don't match known_hosts for user profile
+-added a lot more debugging strings
+-added basic README and RELEASENOTES
+-added timestamps to the results display tables in preparation for v0.5 with background data updates
+-cleaned up a lot of formatting and made it readable on smaller screens
+-added feature to show a list of AP's that updated with '112'
+
+v0.3
+-------
+fixed minor bugs
+added adminStatus to alarm view
+added color coding to adminStatus and ipsecIpAddr
+added SuperList subclass
+added logging and debugging
+
+
+Next in 0.4.4 and beyond (Hopefully)
+------------------------------
+-Background data refreshes
+-More FGW checks for things like IuPS/IuCS links
+--and therefore: stuck alarm checks for FGW related alarms
+-Feed data using Business Objects CTS/AOTS data instead of just an 'unmonfile'
+-User configured data sorting
+-Fix for GRID/GATEWAY data missing
+

@@ -1,0 +1,27 @@
+#!/usr/bin/expect
+
+set timeout 5
+set ipaddr_F [lindex $argv 0]
+set ipaddr_A [lindex $argv 1]
+set fgwpw [lindex $argv 2]
+set apopw [lindex $argv 3]
+set apapw [lindex $argv 4]
+set timeout [lindex $argv 5]
+
+spawn ssh "admin@$ipaddr_F"
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" { send $fgwpw\r }
+        } "*?assword" { send $fgwpw\r }
+
+expect "$ " { send "ssh localOperator@$ipaddr_A\r" }
+expect "yes/no" {
+        send "yes\r"
+        expect "*?assword" { send $apopw\r }
+        } "*?assword" { send $apopw\r }
+
+
+expect "primuser*?$ " {send "su - localAdmin\r" }
+expect "*?assword" { send $apapw\r }
+expect "root*?# " { send "reboot\r" }
+expect "$ " { send "menu\r" }
